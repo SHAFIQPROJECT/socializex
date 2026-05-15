@@ -1,0 +1,31 @@
+{
+  "overview": "SocializeX is a premium full-stack social media platform with a futuristic dark neon glassmorphism UI inspired by Instagram, Discord, X, and LinkedIn. Features real-time chat, AI-powered tools, user profiles, dynamic feeds, and an admin dashboard — built for production-level deployment.",
+  "features": [
+    "Dark neon glassmorphism UI with animated gradients and hover effects",
+    "Social feed with posts, likes, comments, reposts, and emoji reactions",
+    "Real-time chat with typing indicators, read receipts, and group chats",
+    "AI caption generator, hashtag suggestions, and AI chatbot assistant",
+    "User profiles with followers/following, cover images, and activity history",
+    "Explore page with trending posts, suggested users, and smart search",
+    "Reels/short video section with interactive player",
+    "Admin dashboard with user management, analytics, and content moderation",
+    "Notifications system with live activity feed",
+    "Saved posts and content collections",
+    "Internet Identity authentication with role-based access control",
+    "Media uploads with object storage for avatars and post images"
+  ],
+  "category": "social-media",
+  "tags": [
+    "social-media",
+    "chat",
+    "ai",
+    "dark-theme",
+    "glassmorphism",
+    "feed",
+    "profiles",
+    "admin",
+    "reels",
+    "notifications"
+  ],
+  "last_updated": "2026-05-15T12:43:52.922Z"
+}

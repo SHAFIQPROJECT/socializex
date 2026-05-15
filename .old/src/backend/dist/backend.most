@@ -1,0 +1,162 @@
+// Version: 1.0.0
+type Comment__473346131 =
+  {
+    authorId : Principal;
+    content : Text;
+    createdAt : Int;
+    id : Nat;
+    isDeleted : Bool;
+    likesCount : Nat;
+    postId : Nat
+  };
+type Conversation__183739819 =
+  {
+    createdAt : Int;
+    groupName : Text;
+    id : Nat;
+    isGroup : Bool;
+    lastMessage : Text;
+    lastMessageAt : Int;
+    participants : [Principal]
+  };
+type Data__628993992<T> = {var count : Nat__1040412405; elements : [var ?T]};
+type Internal__1007892817<T> =
+  {children : [var ?Node__918630472<T>]; data : Data__628993992<T>};
+type Leaf__693487502<T> = {data : Data__628993992<T>};
+type Message__19119041 =
+  {
+    content : Text;
+    conversationId : Nat;
+    createdAt : Int;
+    id : Nat;
+    isRead : Bool;
+    senderId : Principal
+  };
+type Nat__1040412405 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__918630472<T> =
+  {#internal : Internal__1007892817<T>; #leaf : Leaf__693487502<T>};
+type Notification__879889657 =
+  {
+    actorId : Principal;
+    createdAt : Int;
+    entityId : Text;
+    id : Nat;
+    isRead : Bool;
+    notifType : Text;
+    recipientId : Principal
+  };
+type Post__955439577 =
+  {
+    authorId : Principal;
+    commentsCount : Nat;
+    content : Text;
+    createdAt : Int;
+    hashtags : [Text];
+    id : Nat;
+    imageUrls : [Text];
+    isDeleted : Bool;
+    isReel : Bool;
+    likesCount : Nat;
+    scheduledAt : ?Int;
+    videoUrl : Text
+  };
+type Report__89520890 =
+  {
+    contentId : Text;
+    contentType : Text;
+    createdAt : Int;
+    id : Nat;
+    reason : Text;
+    reporterId : Principal
+  };
+type UserProfile__491224006 =
+  {
+    avatarUrl : Text;
+    bio : Text;
+    coverUrl : Text;
+    createdAt : Int;
+    displayName : Text;
+    followersCount : Nat;
+    followingCount : Nat;
+    id : Principal;
+    isAdmin : Bool;
+    isBanned : Bool;
+    postsCount : Nat;
+    skills : [Text];
+    socialLinks : [Text];
+    username : Text
+  };
+actor {
+  stable commentLikes :
+    {
+      var root : Node__918630472<(Principal, Nat)>;
+      var size : Nat__1040412405
+    };
+  stable comments :
+    {
+      var blockIndex : Nat__1040412405;
+      var blocks : [var [var ?Comment__473346131]];
+      var elementIndex : Nat__1040412405
+    };
+  stable conversations :
+    {
+      var blockIndex : Nat__1040412405;
+      var blocks : [var [var ?Conversation__183739819]];
+      var elementIndex : Nat__1040412405
+    };
+  stable follows :
+    {
+      var root : Node__918630472<(Principal, Principal)>;
+      var size : Nat__1040412405
+    };
+  stable messages :
+    {
+      var blockIndex : Nat__1040412405;
+      var blocks : [var [var ?Message__19119041]];
+      var elementIndex : Nat__1040412405
+    };
+  stable notifications :
+    {
+      var blockIndex : Nat__1040412405;
+      var blocks : [var [var ?Notification__879889657]];
+      var elementIndex : Nat__1040412405
+    };
+  stable postLikes :
+    {
+      var root : Node__918630472<(Principal, Nat)>;
+      var size : Nat__1040412405
+    };
+  stable posts :
+    {
+      var blockIndex : Nat__1040412405;
+      var blocks : [var [var ?Post__955439577]];
+      var elementIndex : Nat__1040412405
+    };
+  stable profiles :
+    {
+      var blockIndex : Nat__1040412405;
+      var blocks : [var [var ?UserProfile__491224006]];
+      var elementIndex : Nat__1040412405
+    };
+  stable reports :
+    {
+      var blockIndex : Nat__1040412405;
+      var blocks : [var [var ?Report__89520890]];
+      var elementIndex : Nat__1040412405
+    };
+  stable savedPosts :
+    {
+      var root : Node__918630472<(Principal, Nat)>;
+      var size : Nat__1040412405
+    };
+  stable state :
+    {
+      var nextCommentId : Nat;
+      var nextConvId : Nat;
+      var nextMessageId : Nat;
+      var nextNotifId : Nat;
+      var nextPostId : Nat;
+      var nextReportId : Nat
+    }
+};

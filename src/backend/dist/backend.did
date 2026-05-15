@@ -1,0 +1,158 @@
+type UserProfile = 
+ record {
+   avatarUrl: text;
+   bio: text;
+   coverUrl: text;
+   createdAt: int;
+   displayName: text;
+   followersCount: nat;
+   followingCount: nat;
+   id: principal;
+   isAdmin: bool;
+   isBanned: bool;
+   postsCount: nat;
+   skills: vec text;
+   socialLinks: vec text;
+   username: text;
+ };
+type Post = 
+ record {
+   authorId: principal;
+   commentsCount: nat;
+   content: text;
+   createdAt: int;
+   hashtags: vec text;
+   id: nat;
+   imageUrls: vec text;
+   isDeleted: bool;
+   isReel: bool;
+   likesCount: nat;
+   scheduledAt: opt int;
+   videoUrl: text;
+ };
+type Notification = 
+ record {
+   actorId: principal;
+   createdAt: int;
+   entityId: text;
+   id: nat;
+   isRead: bool;
+   notifType: text;
+   recipientId: principal;
+ };
+type Message = 
+ record {
+   content: text;
+   conversationId: nat;
+   createdAt: int;
+   id: nat;
+   isRead: bool;
+   senderId: principal;
+ };
+type Conversation = 
+ record {
+   createdAt: int;
+   groupName: text;
+   id: nat;
+   isGroup: bool;
+   lastMessage: text;
+   lastMessageAt: int;
+   participants: vec principal;
+ };
+type Comment = 
+ record {
+   authorId: principal;
+   content: text;
+   createdAt: int;
+   id: nat;
+   isDeleted: bool;
+   likesCount: nat;
+   postId: nat;
+ };
+type AdminStats = 
+ record {
+   activeConversations: nat;
+   bannedUsers: nat;
+   totalComments: nat;
+   totalPosts: nat;
+   totalReports: nat;
+   totalUsers: nat;
+ };
+service : {
+  addComment: (postId: nat, content: text) -> (nat);
+  adminDeletePost: (postId: nat) -> (bool);
+  banUser: (target: principal) -> (bool);
+  chatWithAI: (_message: text, _history:
+   vec record {
+         content: text;
+         role: text;
+       }) -> (variant {
+                err: text;
+                ok: text;
+              });
+  clearMyOpenAIApiKey: () -> (variant {
+                                err: text;
+                                ok: text;
+                              });
+  createConversation: (participants: vec principal, isGroup: bool, groupName:
+   text) -> (nat);
+  createPost: (content: text, imageUrls: vec text, videoUrl: text, hashtags:
+   vec text, isReel: bool, scheduledAt: opt int) -> (nat);
+  deleteComment: (commentId: nat) -> (bool);
+  deletePost: (postId: nat) -> (bool);
+  followUser: (target: principal) -> (bool);
+  generateCaption: (_desc: text) -> (variant {
+                                       err: text;
+                                       ok: text;
+                                     });
+  getAdminPosts: (limit: nat, offset: nat) -> (vec Post) query;
+  getAdminStats: () -> (AdminStats) query;
+  getAdminUsers: (limit: nat, offset: nat) -> (vec UserProfile) query;
+  getComments: (postId: nat) -> (vec Comment) query;
+  getConversations: () -> (vec Conversation) query;
+  getExplorePosts: (limit: nat, offset: nat) -> (vec Post) query;
+  getFeedPosts: (limit: nat, offset: nat) -> (vec Post) query;
+  getFollowers: (uid: principal) -> (vec UserProfile) query;
+  getFollowing: (uid: principal) -> (vec UserProfile) query;
+  getMessages: (convId: nat, limit: nat, offset: nat) -> (vec Message) query;
+  getMyProfile: () -> (opt UserProfile) query;
+  getNotifications: () -> (vec Notification) query;
+  getPost: (postId: nat) -> (opt Post) query;
+  getProfile: (uid: principal) -> (opt UserProfile) query;
+  getReels: (limit: nat, offset: nat) -> (vec Post) query;
+  getSavedPosts: () -> (vec Post) query;
+  getSuggestedUsers: () -> (vec UserProfile) query;
+  getTrendingHashtags: () -> (vec record {
+                                    text;
+                                    nat;
+                                  }) query;
+  getUnreadNotificationCount: () -> (nat) query;
+  getUserPosts: (uid: principal, limit: nat, offset: nat) -> (vec Post) query;
+  isFollowingUser: (target: principal) -> (bool) query;
+  isMyOpenAIConfigured: () -> (bool) query;
+  isPostLiked: (postId: nat) -> (bool) query;
+  likeComment: (commentId: nat) -> (bool);
+  likePost: (postId: nat) -> (bool);
+  markAllNotificationsRead: () -> ();
+  markMessageRead: (msgId: nat) -> (bool);
+  markNotificationRead: (notifId: nat) -> (bool);
+  registerUser: (username: text, displayName: text) -> (bool);
+  reportContent: (contentType: text, contentId: text, reason: text) -> (nat);
+  savePost: (postId: nat) -> (bool);
+  searchUsers: ("query": text) -> (vec UserProfile) query;
+  sendMessage: (convId: nat, content: text) -> (nat);
+  setMyOpenAIApiKey: (_key: text) -> (variant {
+                                        err: text;
+                                        ok: text;
+                                      });
+  suggestHashtags: (_content: text) -> (variant {
+                                          err: text;
+                                          ok: vec text;
+                                        });
+  unbanUser: (target: principal) -> (bool);
+  unfollowUser: (target: principal) -> (bool);
+  unlikePost: (postId: nat) -> (bool);
+  unsavePost: (postId: nat) -> (bool);
+  updateProfile: (displayName: text, bio: text, avatarUrl: text, coverUrl:
+   text, socialLinks: vec text, skills: vec text) -> (bool);
+}
